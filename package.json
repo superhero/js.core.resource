@@ -17,7 +17,6 @@
     "test": "nyc mocha './{,!(node_modules)/**}/*.test.js'"
   },
   "dependencies": {
-    "@superhero/websocket": "1.1.0",
     "@superhero/debug": "1.1.4"
   },
   "devDependencies": {
