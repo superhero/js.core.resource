@@ -1,7 +1,7 @@
 {
   "name": "@superhero/core.resource",
   "version": "0.0.1",
-  "description": "Addon module to serve resources from a public folder",
+  "description": "Addon module to serve resources from a public folder to the @superhero/core module",
   "repository": "git@github.com:superhero/js.core.resource.git",
   "main": "index.js",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "test": "nyc mocha './{,!(node_modules)/**}/*.test.js'"
   },
   "dependencies": {
+    "@superhero/websocket": "1.1.0",
     "@superhero/debug": "1.1.4"
   },
   "devDependencies": {
