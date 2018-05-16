@@ -5,7 +5,6 @@ config = require('./config')
 module.exports = (options) =>
 {
   log(`Bootstrap the resource dispatcher`)
-  const Resource = require('.')
 
   for(key in options)
     switch(key)
