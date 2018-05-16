@@ -12,8 +12,6 @@ module.exports = class extends Dispatcher
   {
     try
     {
-      require('@superhero/debug').log(base + '/' + config.directory + path.normalize(this.request.url.pathname))
-
       const
       pathname  = this.request.url.pathname,
       resource  = base + '/' + config.directory + path.normalize(pathname),
