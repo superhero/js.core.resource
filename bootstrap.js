@@ -10,7 +10,7 @@ module.exports = (options) =>
   for(key in options)
     switch(key)
     {
-      case 'origin' :
+      case 'directory' :
         log(`${key} set to:`, options[key])
         config[key] = options[key]
         break
