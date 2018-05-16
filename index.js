@@ -13,7 +13,7 @@ module.exports = class extends require('@superhero/core/controller/dispatcher')
     {
       const
       pathname  = this.request.url.pathname,
-      resource  = base + config.directory + path.normalize(pathname),
+      resource  = base + '/' + config.directory + path.normalize(pathname),
       extension = path.extname(resource).toLowerCase(),
       headers   = { 'Content-Type' : config.contentTypeMapper[extension] },
       body      = await readFile(resource, 'utf-8')
