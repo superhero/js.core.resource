@@ -1,6 +1,6 @@
 module.exports =
 {
-  directory : '/public',
+  directory : 'public',
   contentTypeMapper :
   {
     '.jpg'  : 'image/jpeg',
