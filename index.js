@@ -17,7 +17,7 @@ module.exports = class extends Dispatcher
       resource  = base + '/' + config.directory + path.normalize(pathname),
       extension = path.extname(resource).toLowerCase(),
       headers   = { 'Content-Type' : config.contentTypeMapper[extension] },
-      body      = await readFile(resource, 'utf-8')
+      body      = await readFile(resource)
 
       return { view:'raw', headers, body }
     }
