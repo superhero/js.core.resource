@@ -3,7 +3,7 @@ fs          = require('fs'),
 path        = require('path'),
 readFile    = require('util').promisify(fs.readFile),
 base        = path.dirname(require.main.filename),
-config      = require('./config'),
+config      = require('./config_module'),
 Dispatcher  = require('@superhero/core/controller/dispatcher')
 
 module.exports = class extends Dispatcher

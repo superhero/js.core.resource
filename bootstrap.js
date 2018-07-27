@@ -1,6 +1,6 @@
 const
 log = require('@superhero/debug').log,
-config = require('./config')
+config = require('./config_module')
 
 module.exports = (options) =>
 {

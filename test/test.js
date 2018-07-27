@@ -5,22 +5,26 @@ describe('resource dispatcher integration tests', async () =>
   context = require('mochawesome/addContext'),
   Request = require('@superhero/request'),
   request = new Request({ url:'http://localhost:9001' }),
-  core    = require('@superhero/core'),
-  routes  =
-  [
-    {
-      endpoint  : 'index',
-      policy    : /^\/.+/
-    }
-  ]
+  Core    = require('@superhero/core'),
+  config  =
+  {
+    routes:
+    [
+      {
+        endpoint  : 'index',
+        policy    : /^\/.+/
+      }
+    ]
+  },
+  core = new Core(config)
 
   let server
 
   before(function(done)
   {
     require.main.filename = __filename
-    context(this, { title:'routes', value:routes })
-    server = core.server('http', routes, { debug:false })
+    context(this, { title:'routes', value:config.routes })
+    server = core.server('http', config.routes, { debug:false })
     server.on('listening', () => done())
     server.listen(9001)
   })
