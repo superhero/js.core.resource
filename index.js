@@ -1,7 +1,7 @@
 const
 fs          = require('fs'),
 path        = require('path'),
-readFile    = require('util').promisify(fs.readFile),
+stat        = require('util').promisify(fs.stat),
 base        = path.dirname(require.main.filename),
 config      = require('./config_module'),
 Dispatcher  = require('@superhero/core/controller/dispatcher')
@@ -15,15 +15,25 @@ module.exports = class extends Dispatcher
       const
       pathname  = this.request.url.pathname,
       resource  = base + '/' + config.directory + path.normalize(pathname),
-      extension = path.extname(resource).toLowerCase(),
-      headers   = { 'Content-Type' : config.contentTypeMapper[extension] },
-      body      = await readFile(resource)
+      stats     = await stat(resource)
 
-      return { view:'raw', headers, body }
+      if(!stats.isFile())
+        throw 404
+
+      const
+      stream    = fs.createReadStream(resource),
+      extension = path.extname(resource).toLowerCase(),
+      headers   = {}
+
+      if(extension in config.contentTypeMapper)
+        headers['Content-Type'] = config.contentTypeMapper[extension]
+
+      return { view:'stream', headers, stream }
     }
     catch(error)
     {
-      throw 404
+      if(error.code === 'ENOENT')
+        throw 404
     }
   }
 }
