@@ -5,8 +5,8 @@
     "passes": 10,
     "pending": 0,
     "failures": 0,
-    "start": "2018-08-14T11:18:12.163Z",
-    "end": "2018-08-14T11:18:12.219Z",
+    "start": "2018-09-13T10:14:13.373Z",
+    "end": "2018-09-13T10:14:13.429Z",
     "duration": 56,
     "testsRegistered": 10,
     "passPercent": 100,
@@ -19,7 +19,7 @@
     "pendingPercentClass": "danger"
   },
   "suites": {
-    "uuid": "18ab05e7-76dd-4a35-b6ba-089bb583dac9",
+    "uuid": "719309fc-0b84-44e4-8c28-058f05392b18",
     "title": "",
     "fullFile": "",
     "file": "",
@@ -28,7 +28,7 @@
     "tests": [],
     "suites": [
       {
-        "uuid": "ec3221ef-fd88-4e74-826c-e0785c7d6db3",
+        "uuid": "e290a181-d8ec-4b45-8068-bb4550cbba93",
         "title": "resource dispatcher integration tests",
         "fullFile": "/home/erik/Projects/@superhero/js.core.resource/test/test.js",
         "file": "/test/test.js",
@@ -45,7 +45,7 @@
             "code": "require.main.filename = __filename\ncontext(this, { title:'routes', value:config.routes })\nserver = core.server('http', config.routes, { debug:false })\nserver.on('listening', () => done())\nserver.listen(9001)",
             "err": {},
             "isRoot": false,
-            "uuid": "db97560b-86fe-403e-b39e-6e04902adbb4",
+            "uuid": "ef4a9733-066f-4329-ad9f-610cf0278216",
             "isHook": true,
             "skipped": false
           }
@@ -55,14 +55,14 @@
             "title": "\"after all\" hook",
             "fullTitle": "resource dispatcher integration tests \"after all\" hook",
             "timedOut": false,
-            "duration": 0,
+            "duration": 1,
             "pass": false,
             "fail": false,
             "pending": false,
             "code": "server.close()",
             "err": {},
             "isRoot": false,
-            "uuid": "c78f45af-82fe-4d61-81f2-fe3960bac152",
+            "uuid": "f40bd1bd-8cfa-4857-944c-3ae031b0116f",
             "isHook": true,
             "skipped": false
           }
@@ -81,7 +81,7 @@
             "code": "const file = await request.get('/none-existent.url')\nexpect(file.status).to.be.equal(404)",
             "err": {},
             "isRoot": false,
-            "uuid": "3e75dbe4-6efe-457d-a9a5-939290471ca3",
+            "uuid": "4514fd7b-75e4-4419-bf5b-0f9e5ab48708",
             "isHook": false,
             "skipped": false
           },
@@ -98,7 +98,7 @@
             "code": "const file = await request.get('/file.jpg')\nexpect(file.headers['content-type']).to.be.equal('image/jpeg')\nexpect(file.status).to.be.equal(200)",
             "err": {},
             "isRoot": false,
-            "uuid": "08e6bfee-f406-46d0-8df1-6ca24b5c3151",
+            "uuid": "534174d4-1324-4c39-9388-a806d4821ca2",
             "isHook": false,
             "skipped": false
           },
@@ -115,7 +115,7 @@
             "code": "const file = await request.get('/file.gif')\nexpect(file.headers['content-type']).to.be.equal('image/gif')\nexpect(file.status).to.be.equal(200)",
             "err": {},
             "isRoot": false,
-            "uuid": "90747328-acec-44f8-8d1d-05bae4677cb4",
+            "uuid": "aa8df753-1a22-4ab4-9757-e084afdf0c7f",
             "isHook": false,
             "skipped": false
           },
@@ -132,7 +132,7 @@
             "code": "const file = await request.get('/file.png')\nexpect(file.headers['content-type']).to.be.equal('image/png')\nexpect(file.status).to.be.equal(200)",
             "err": {},
             "isRoot": false,
-            "uuid": "26582b03-fdb7-457b-98b7-39b3cf009ee0",
+            "uuid": "230bd497-c1bf-45d5-bcb4-53a9195445c4",
             "isHook": false,
             "skipped": false
           },
@@ -149,7 +149,7 @@
             "code": "const file = await request.get('/file.ico')\nexpect(file.headers['content-type']).to.be.equal('image/vnd.microsoft.icon')\nexpect(file.status).to.be.equal(200)",
             "err": {},
             "isRoot": false,
-            "uuid": "2bf2ec63-abf3-4420-847f-2b61ec94eb68",
+            "uuid": "a3069cd6-073c-4ce6-8659-6a480934a92f",
             "isHook": false,
             "skipped": false
           },
@@ -166,7 +166,7 @@
             "code": "const file = await request.get('/file.css')\nexpect(file.headers['content-type']).to.be.equal('text/css')\nexpect(file.status).to.be.equal(200)",
             "err": {},
             "isRoot": false,
-            "uuid": "eb2db1b0-9713-4251-bb56-b025df3b5311",
+            "uuid": "3485a487-6f4e-4792-8623-3fdab60bdad4",
             "isHook": false,
             "skipped": false
           },
@@ -174,7 +174,7 @@
             "title": "csv content-type header",
             "fullTitle": "resource dispatcher integration tests csv content-type header",
             "timedOut": false,
-            "duration": 2,
+            "duration": 1,
             "state": "passed",
             "speed": "fast",
             "pass": true,
@@ -183,7 +183,7 @@
             "code": "const file = await request.get('/file.csv')\nexpect(file.headers['content-type']).to.be.equal('text/csv')\nexpect(file.status).to.be.equal(200)",
             "err": {},
             "isRoot": false,
-            "uuid": "b32f4751-6f19-49e1-a82c-3b5d1d76a4e3",
+            "uuid": "37b33021-c0c0-4630-a9f9-efede203911c",
             "isHook": false,
             "skipped": false
           },
@@ -191,7 +191,7 @@
             "title": "pdf content-type header",
             "fullTitle": "resource dispatcher integration tests pdf content-type header",
             "timedOut": false,
-            "duration": 1,
+            "duration": 2,
             "state": "passed",
             "speed": "fast",
             "pass": true,
@@ -200,7 +200,7 @@
             "code": "const file = await request.get('/file.pdf')\nexpect(file.headers['content-type']).to.be.equal('application/pdf')\nexpect(file.status).to.be.equal(200)",
             "err": {},
             "isRoot": false,
-            "uuid": "431ecf90-28c3-4b4a-8762-fbe443987833",
+            "uuid": "5a88ee06-a33f-460e-a4d4-b3d910584d46",
             "isHook": false,
             "skipped": false
           },
@@ -217,7 +217,7 @@
             "code": "const file = await request.get('/file.json')\nexpect(file.headers['content-type']).to.be.equal('application/json')\nexpect(file.status).to.be.equal(200)",
             "err": {},
             "isRoot": false,
-            "uuid": "6100c82b-91f5-4736-ba4c-517fbf0e9269",
+            "uuid": "d223d6e8-ed2f-4868-8996-4c9c370bb437",
             "isHook": false,
             "skipped": false
           },
@@ -225,7 +225,7 @@
             "title": "js content-type header",
             "fullTitle": "resource dispatcher integration tests js content-type header",
             "timedOut": false,
-            "duration": 2,
+            "duration": 1,
             "state": "passed",
             "speed": "fast",
             "pass": true,
@@ -234,28 +234,28 @@
             "code": "const file = await request.get('/file.js')\nexpect(file.headers['content-type']).to.be.equal('application/javascript')\nexpect(file.status).to.be.equal(200)",
             "err": {},
             "isRoot": false,
-            "uuid": "33db0cf8-da54-407e-9e04-cff01b0ba567",
+            "uuid": "6534f3d6-cc47-4b05-8642-98375fa2c65a",
             "isHook": false,
             "skipped": false
           }
         ],
         "suites": [],
         "passes": [
-          "3e75dbe4-6efe-457d-a9a5-939290471ca3",
-          "08e6bfee-f406-46d0-8df1-6ca24b5c3151",
-          "90747328-acec-44f8-8d1d-05bae4677cb4",
-          "26582b03-fdb7-457b-98b7-39b3cf009ee0",
-          "2bf2ec63-abf3-4420-847f-2b61ec94eb68",
-          "eb2db1b0-9713-4251-bb56-b025df3b5311",
-          "b32f4751-6f19-49e1-a82c-3b5d1d76a4e3",
-          "431ecf90-28c3-4b4a-8762-fbe443987833",
-          "6100c82b-91f5-4736-ba4c-517fbf0e9269",
-          "33db0cf8-da54-407e-9e04-cff01b0ba567"
+          "4514fd7b-75e4-4419-bf5b-0f9e5ab48708",
+          "534174d4-1324-4c39-9388-a806d4821ca2",
+          "aa8df753-1a22-4ab4-9757-e084afdf0c7f",
+          "230bd497-c1bf-45d5-bcb4-53a9195445c4",
+          "a3069cd6-073c-4ce6-8659-6a480934a92f",
+          "3485a487-6f4e-4792-8623-3fdab60bdad4",
+          "37b33021-c0c0-4630-a9f9-efede203911c",
+          "5a88ee06-a33f-460e-a4d4-b3d910584d46",
+          "d223d6e8-ed2f-4868-8996-4c9c370bb437",
+          "6534f3d6-cc47-4b05-8642-98375fa2c65a"
         ],
         "failures": [],
         "pending": [],
         "skipped": [],
-        "duration": 40,
+        "duration": 39,
         "root": false,
         "rootEmpty": false,
         "_timeout": 2000

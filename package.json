@@ -1,6 +1,6 @@
 {
   "name": "@superhero/core.resource",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "description": "Addon module to serve resources from a public folder to the @superhero/core module",
   "repository": "git@github.com:superhero/js.core.resource.git",
   "main": "index.js",

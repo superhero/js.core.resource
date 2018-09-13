@@ -14,7 +14,8 @@ module.exports = class extends Dispatcher
     {
       const
       pathname  = this.request.url.pathname,
-      resource  = base + '/' + config.directory + path.normalize(pathname),
+      directory = this.route.directory || config.directory,
+      resource  = base + '/' + directory + path.normalize(pathname),
       stats     = await stat(resource)
 
       if(!stats.isFile())
