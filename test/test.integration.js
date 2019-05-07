@@ -1,25 +1,5 @@
 describe('resource dispatcher integration tests', async () =>
 {
-  /*
-  const
-  expect  = require('chai').expect,
-  context = require('mochawesome/addContext'),
-  Request = require('@superhero/request'),
-  request = new Request({ url:'http://localhost:9001' }),
-  Core    = require('@superhero/core'),
-  config  =
-  {
-    routes:
-    [
-      {
-        endpoint  : 'index',
-        policy    : /^\/.+/
-      }
-    ]
-  },
-  core = new Core(config)
-  */
-
   let server
 
   const
