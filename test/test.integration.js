@@ -1,5 +1,6 @@
 describe('resource dispatcher integration tests', async () =>
 {
+  /*
   const
   expect  = require('chai').expect,
   context = require('mochawesome/addContext'),
@@ -17,19 +18,43 @@ describe('resource dispatcher integration tests', async () =>
     ]
   },
   core = new Core(config)
+  */
 
   let server
 
-  before(function(done)
+  const
+  expect  = require('chai').expect,
+  context = require('mochawesome/addContext'),
+  Request = require('@superhero/request'),
+  request = new Request({ url:'http://localhost:9001' })
+
+  let core
+
+  before((done) =>
   {
-    require.main.filename = __filename
-    context(this, { title:'routes', value:config.routes })
-    server = core.server('http', config.routes, { debug:false })
-    server.on('listening', () => done())
-    server.listen(9001)
+    const
+    CoreFactory = require('@superhero/core/factory'),
+    coreFactory = new CoreFactory
+
+    core = coreFactory.create()
+
+    core.add('@superhero/core.resource', __dirname + '/..')
+    core.add('test', __dirname)
+    core.add('http/server')
+
+    core.load()
+
+    core.locate('bootstrap').bootstrap().then(() =>
+    {
+      core.locate('http/server').listen(9001)
+      core.locate('http/server').onListening(done)
+    })
   })
 
-  after(() => server.close())
+  after(() =>
+  {
+    core.locate('http/server').close()
+  })
 
   it('404 status response', async () =>
   {
@@ -39,63 +64,63 @@ describe('resource dispatcher integration tests', async () =>
 
   it('jpg content-type header', async () =>
   {
-    const file = await request.get('/file.jpg')
+    const file = await request.get('/resource/file.jpg')
     expect(file.headers['content-type']).to.be.equal('image/jpeg')
     expect(file.status).to.be.equal(200)
   })
 
   it('gif content-type header', async () =>
   {
-    const file = await request.get('/file.gif')
+    const file = await request.get('/resource/file.gif')
     expect(file.headers['content-type']).to.be.equal('image/gif')
     expect(file.status).to.be.equal(200)
   })
 
   it('png content-type header', async () =>
   {
-    const file = await request.get('/file.png')
+    const file = await request.get('/resource/file.png')
     expect(file.headers['content-type']).to.be.equal('image/png')
     expect(file.status).to.be.equal(200)
   })
 
   it('ico content-type header', async () =>
   {
-    const file = await request.get('/file.ico')
+    const file = await request.get('/resource/file.ico')
     expect(file.headers['content-type']).to.be.equal('image/vnd.microsoft.icon')
     expect(file.status).to.be.equal(200)
   })
 
   it('css content-type header', async () =>
   {
-    const file = await request.get('/file.css')
+    const file = await request.get('/resource/file.css')
     expect(file.headers['content-type']).to.be.equal('text/css')
     expect(file.status).to.be.equal(200)
   })
 
   it('csv content-type header', async () =>
   {
-    const file = await request.get('/file.csv')
+    const file = await request.get('/resource/file.csv')
     expect(file.headers['content-type']).to.be.equal('text/csv')
     expect(file.status).to.be.equal(200)
   })
 
   it('pdf content-type header', async () =>
   {
-    const file = await request.get('/file.pdf')
+    const file = await request.get('/resource/file.pdf')
     expect(file.headers['content-type']).to.be.equal('application/pdf')
     expect(file.status).to.be.equal(200)
   })
 
   it('json content-type header', async () =>
   {
-    const file = await request.get('/file.json')
+    const file = await request.get('/resource/file.json')
     expect(file.headers['content-type']).to.be.equal('application/json')
     expect(file.status).to.be.equal(200)
   })
 
   it('js content-type header', async () =>
   {
-    const file = await request.get('/file.js')
+    const file = await request.get('/resource/file.js')
     expect(file.headers['content-type']).to.be.equal('application/javascript')
     expect(file.status).to.be.equal(200)
   })
