@@ -1,21 +1,24 @@
 module.exports =
 {
-  resource:
+  core:
   {
-    'directory'     : 'test/public',
-  },
-  http:
-  {
-    server:
+    resource:
     {
-      routes:
+      'directory'     : 'test/public',
+    },
+    http:
+    {
+      server:
       {
-        resource:
+        routes:
         {
-          url       : '/resource/.+',
-          method    : 'GET',
-          allowed   : ['GET'],
-          endpoint  : '/'
+          resource:
+          {
+            url       : '/resource/.+',
+            method    : 'get',
+            endpoint  : '/',
+            input     : false
+          }
         }
       }
     }
