@@ -30,18 +30,20 @@ This is an addon module to the [superhero/core](https://github.com/superhero/js.
 ```js
 module.exports =
 {
-  http:
+  core:
   {
-    server:
+    http:
     {
-      routes:
+      server:
       {
-        resource:
+        routes:
         {
-          url       : '/resource/.+',
-          method    : 'GET',
-          allowed   : ['GET'],
-          endpoint  : '@superhero/core.resource'
+          resource:
+          {
+            url       : '/resource/.+',
+            method    : 'GET',
+            endpoint  : '@superhero/core.resource'
+          }
         }
       }
     }

@@ -1,23 +1,24 @@
 const
 fs              = require('fs'),
 stat            = require('util').promisify(fs.stat),
-RestDispatcher  = require('@superhero/core/http/server/dispatcher/rest'),
-BadRequest      = require('@superhero/core/http/server/dispatcher/error/bad-request'),
-NotFound        = require('@superhero/core/http/server/dispatcher/error/page-not-found')
+Dispatcher      = require('superhero/core/http/server/dispatcher'),
+BadRequest      = require('superhero/core/http/server/dispatcher/error/bad-request'),
+NotFound        = require('superhero/core/http/server/dispatcher/error/not-found')
 
-class ResourceEndpoint extends RestDispatcher
+
+class ResourceEndpoint extends Dispatcher
 {
-  async get()
+  async dispatch()
   {
     const
-    configuration = this.locator.locate('configuration'),
-    path          = this.locator.locate('path')
+    configuration = this.locator.locate('core/configuration'),
+    path          = this.locator.locate('core/path')
 
     try
     {
       const
       filename    = this.route.filename   || this.request.url,
-      directory   = this.route.directory  || configuration.find('resource.directory'),
+      directory   = this.route.directory  || configuration.find('core.resource.directory'),
       absolute    = path.normalize(filename),
       isAbsolute  = path.isAbsolute(absolute)
 
@@ -35,12 +36,12 @@ class ResourceEndpoint extends RestDispatcher
       stream    = fs.createReadStream(resource),
       extension = path.extension(resource).toLowerCase(),
       // extension to content-type mapper
-      mapper    = configuration.find('resource.content-type.mapper')
+      mapper    = configuration.find('core.resource.content-type.mapper')
 
       if(extension in mapper)
         this.view.headers['Content-Type'] = mapper[extension]
 
-      this.view.meta.view   = 'http/server/view/stream'
+      this.view.meta.view   = 'core/http/server/view/stream'
       this.view.meta.stream = stream
     }
     catch(error)

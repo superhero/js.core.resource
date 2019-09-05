@@ -13,32 +13,34 @@ describe('resource dispatcher integration tests', async () =>
   before((done) =>
   {
     const
-    CoreFactory = require('@superhero/core/factory'),
+    CoreFactory = require('superhero/core/factory'),
     coreFactory = new CoreFactory
 
     core = coreFactory.create()
 
     core.add('@superhero/core.resource', __dirname + '/..')
+
     core.add('test', __dirname)
-    core.add('http/server')
+
+    core.add('core/http/server')
 
     core.load()
 
-    core.locate('bootstrap').bootstrap().then(() =>
+    core.locate('core/bootstrap').bootstrap().then(() =>
     {
-      core.locate('http/server').listen(9001)
-      core.locate('http/server').onListening(done)
+      core.locate('core/http/server').listen(9001)
+      core.locate('core/http/server').onListening(done)
     })
   })
 
   after(() =>
   {
-    core.locate('http/server').close()
+    core.locate('core/http/server').close()
   })
 
   it('404 status response', async () =>
   {
-    const file = await request.get('/none-existent.url')
+    const file = await request.get('/resource/none-existent.url')
     expect(file.status).to.be.equal(404)
   })
 

@@ -1,6 +1,6 @@
 {
   "name": "@superhero/core.resource",
-  "version": "1.8.3",
+  "version": "2.0.0-beta.1",
   "description": "Addon module to serve resources from a public folder to the @superhero/core module",
   "repository": "git@github.com:superhero/js.core.resource.git",
   "main": "index.js",
@@ -20,7 +20,7 @@
     "@superhero/debug": "1.1.11"
   },
   "devDependencies": {
-    "@superhero/core": "1.8.3",
+    "superhero": "2.0.0-beta.18",
     "@superhero/request": "1.1.0",
     "mocha": "5.1.0",
     "mochawesome": "3.0.2",
