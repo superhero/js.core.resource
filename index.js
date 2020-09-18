@@ -11,6 +11,7 @@ class ResourceEndpoint extends Dispatcher
   async dispatch()
   {
     const
+    console       = this.locator.locate('core/console'),
     configuration = this.locator.locate('core/configuration'),
     path          = this.locator.locate('core/path')
 
@@ -25,21 +26,43 @@ class ResourceEndpoint extends Dispatcher
       if(!isAbsolute)
         throw new BadRequest('An absolute path is required')
 
-      const
-      resource  = path.main.dirname + '/' + directory + absolute,
-      stats     = await stat(resource)
+      const 
+      relativeResource  = '/' + directory + absolute,
+      absoluteResource  = path.main.dirname + relativeResource
+
+      let stats
+
+      try
+      {
+        stats = await stat(absoluteResource)
+      }
+      catch(error)
+      {
+        console.log('problem locating the resource file:', directory + absolute)
+        throw error
+      }
 
       if(!stats.isFile())
         throw new NotFound('Not found')
 
       const
-      stream    = fs.createReadStream(resource),
-      extension = path.extension(resource).toLowerCase(),
+      stream    = fs.createReadStream(absoluteResource),
+      extension = path.extension(absoluteResource).toLowerCase(),
       // extension to content-type mapper
       mapper    = configuration.find('core.resource.content-type.mapper')
 
-      if(extension in mapper)
-        this.view.headers['Content-Type'] = mapper[extension]
+      try
+      {
+        if(extension in mapper)
+          this.view.headers['Content-Type'] = mapper[extension]
+      }
+      catch(error)
+      {
+        if(!mapper)
+          console.log('problem locating the configuration, did you add the module to the core context in the main index file?')
+
+        throw error
+      }
 
       this.view.meta.view   = 'core/http/server/view/stream'
       this.view.meta.stream = stream

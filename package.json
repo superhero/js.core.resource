@@ -16,11 +16,8 @@
     "test": "nyc mocha './test/test.*.js' --opts ./test/mocha.opts",
     "start": "node ./src/index.js"
   },
-  "dependencies": {
-    "@superhero/debug": "1.1.11"
-  },
   "devDependencies": {
-    "superhero": "2.0.0-beta.18",
+    "superhero": "2.0.0",
     "@superhero/request": "1.1.0",
     "mocha": "5.1.0",
     "mochawesome": "3.0.2",
