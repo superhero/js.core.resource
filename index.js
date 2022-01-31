@@ -1,9 +1,9 @@
 const
-fs              = require('fs'),
-stat            = require('util').promisify(fs.stat),
-Dispatcher      = require('superhero/core/http/server/dispatcher'),
-BadRequest      = require('superhero/core/http/server/dispatcher/error/bad-request'),
-NotFound        = require('superhero/core/http/server/dispatcher/error/not-found')
+  fs          = require('fs'),
+  stat        = require('util').promisify(fs.stat),
+  Dispatcher  = require('superhero/core/http/server/dispatcher'),
+  BadRequest  = require('superhero/core/http/server/dispatcher/error/bad-request'),
+  NotFound    = require('superhero/core/http/server/dispatcher/error/not-found')
 
 
 class ResourceEndpoint extends Dispatcher
@@ -11,68 +11,81 @@ class ResourceEndpoint extends Dispatcher
   async dispatch()
   {
     const
-    console       = this.locator.locate('core/console'),
-    configuration = this.locator.locate('core/configuration'),
-    path          = this.locator.locate('core/path')
+      console       = this.locator.locate('core/console'),
+      configuration = this.locator.locate('core/configuration'),
+      path          = this.locator.locate('core/path'),
+      filename      = this.route.filename   || this.request.url,
+      directory     = this.route.directory  || configuration.find('core.resource.directory'),
+      absolute      = path.normalize(filename),
+      isAbsolute    = path.isAbsolute(absolute)
 
-    try
+    if(!isAbsolute)
     {
-      const
-      filename    = this.route.filename   || this.request.url,
-      directory   = this.route.directory  || configuration.find('core.resource.directory'),
-      absolute    = path.normalize(filename),
-      isAbsolute  = path.isAbsolute(absolute)
+      const error = new BadRequest('An absolute path is required')
+      error.chain = { filename, absolute }
+      throw error
+    }
 
-      if(!isAbsolute)
-        throw new BadRequest('An absolute path is required')
-
-      const 
+    const 
       relativeResource  = '/' + directory + absolute,
       absoluteResource  = path.main.dirname + relativeResource
 
-      let stats
+    let stats
 
-      try
-      {
-        stats = await stat(absoluteResource)
-      }
-      catch(error)
-      {
-        console.log('problem locating the resource file:', directory + absolute)
-        throw error
-      }
+    try
+    {
+      stats = await stat(absoluteResource)
 
       if(!stats.isFile())
-        throw new NotFound('Not found')
-
-      const
-      stream    = fs.createReadStream(absoluteResource),
-      extension = path.extension(absoluteResource).toLowerCase(),
-      // extension to content-type mapper
-      mapper    = configuration.find('core.resource.content-type.mapper')
-
-      try
       {
-        if(extension in mapper)
-          this.view.headers['Content-Type'] = mapper[extension]
-      }
-      catch(error)
-      {
-        if(!mapper)
-          console.log('problem locating the configuration, did you add the module to the core context in the main index file?')
-
+        const error = new NotFound('Not found')
+        error.code  = 'E_CORE_RESOURCE_IS_NOT_A_FILE'
         throw error
       }
+    }
+    catch(previousError)
+    {
+      console.log('problem locating the resource file:', directory + absolute)
+      switch(previousError.code)
+      {
+        case 'ENOENT':
+        case 'E_CORE_RESOURCE_IS_NOT_A_FILE':
+        {
+          const error = new NotFound('Not found')
+          error.chain = { previousError, relativeResource, absoluteResource }
+          throw error
+        }
+        default:
+        {
+          throw previousError
+        }
+      }
+    }
 
-      this.view.meta.view   = 'core/http/server/view/stream'
-      this.view.meta.stream = stream
+    const
+      stream    = fs.createReadStream(absoluteResource),
+      extension = path.extension(absoluteResource).toLowerCase(),
+      mapper    = configuration.find('core.resource.content-type.mapper')
+
+    try
+    {
+      if(extension in mapper)
+      {
+        this.view.headers['content-type'] = mapper[extension]
+      }
     }
     catch(error)
     {
-      throw error.code === 'ENOENT'
-        ? new NotFound('Not found')
-        : error
+      if(!mapper)
+      {
+        console.log('problem locating the configuration, did you add the module to the core context in the main index file?')
+      }
+
+      throw error
     }
+
+    this.view.meta.view   = 'core/http/server/view/stream'
+    this.view.meta.stream = stream
   }
 }
 
