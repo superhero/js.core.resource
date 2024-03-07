@@ -16,13 +16,15 @@ class ResourceEndpoint extends Dispatcher
       path          = this.locator.locate('core/path'),
       filename      = this.route.filename   || this.request.url,
       directory     = this.route.directory  || configuration.find('core.resource.directory'),
-      absolute      = path.normalize(filename),
+      dirname       = this.route.dirname    || path.dirname(filename),
+      basename      = require('path').basename(filename),
+      absolute      = path.normalize(dirname + '/' + basename),
       isAbsolute    = path.isAbsolute(absolute)
 
     if(!isAbsolute)
     {
       const error = new BadRequest('An absolute path is required')
-      error.chain = { filename, absolute }
+      error.chain = { filename, dirname, absolute }
       throw error
     }
 
